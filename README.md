@@ -13,27 +13,22 @@
 
 </div>
 
-# Genezio Nest Getting Started
+# Genezio Nest React Getting Started
 
-In the index.mjs file, you will see a very basic Nest.js application that is set up to be deployed as a Genezio function. It handles a couple of requests (/).
+This is a Genezio project template for an Nest.js fullstack application. It is a simple Nest.js application that is set up to be deployed as a Genezio function.
 
-You can update the Nest.js application and then add a front-end to your application:
+In the server/app.mjs file, you will see a very basic Nest.js application that is set up to be deployed as a Genezio function. It handles a couple of requests on the following endpoints:
 
-1. Create a client/index.html file.
-2. Update the genezio.yaml file and add a frontend section:
+/ -> return a simple "Hello World" message
+/hello?name= -> return the name and the server location
+You can update the Express application in the client/src/App.tsx file, you can simply fetch data from the Express web app by sending a request to the function URL.
 
-```
-frontend:
-  path: client
-  publish: .
-```
-
-Then, in the client/index.html file, you can simply fetch data from the Nest.js web app. You can see the Nest.js app's URLs by clicking the "View your URLs" button in the editor.
+Note: You can get the Express app's URLs by clicking on "View your URLs" button in the code editor in the dashboard or in the Overview page.
 
 # Deploy
 :rocket: You can deploy your own version of the template to Genezio with one click:
 
-[![Deploy to Genezio](https://raw.githubusercontent.com/Genez-io/graphics/main/svg/deploy-button.svg)](https://app.genez.io/start/deploy?repository=https://github.com/Genez-io/nest-getting-started)
+[![Deploy to Genezio](https://raw.githubusercontent.com/Genez-io/graphics/main/svg/deploy-button.svg)](https://app.genez.io/start/deploy?repository=https://github.com/Genez-io/nest-react-getting-started)
 
 
 ## Genezio CLI Commands

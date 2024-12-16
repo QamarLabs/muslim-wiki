@@ -15,3 +15,4 @@ frontend:
             - npm install
         build:
             - npm run build
+    subdomain: brown-given-quail

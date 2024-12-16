@@ -7,7 +7,10 @@ export default function App() {
   const [response, setResponse] = useState("");
 
   async function sayHello() {
-    setResponse(`Hello, ${name}!`);
+    const url = import.meta.env.VITE_API_URL;
+    const res = await fetch(`${url}/hello?name=${name}`);
+    const data = await res.json();
+    setResponse(data.message);
   }
 
   return (
