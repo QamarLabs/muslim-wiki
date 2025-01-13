@@ -1,5 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Res } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
@@ -11,7 +12,8 @@ export class AppController {
   }
 
   @Get('hello')
-  getHelloWithName(@Query('name') name?: string): string {
-    return this.appService.getHelloWithName(name);
+  async getHelloWithName(@Query('name') name: string, @Res() res: Response) {
+    const response = await this.appService.getHelloWithName(name);
+    res.json(response);
   }
 }
