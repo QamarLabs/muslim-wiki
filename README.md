@@ -28,7 +28,7 @@ Note: You can get the Express app's URLs by clicking on "View your URLs" button 
 # Deploy
 :rocket: You can deploy your own version of the template to Genezio with one click:
 
-[![Deploy to Genezio](https://raw.githubusercontent.com/Genez-io/graphics/main/svg/deploy-button.svg)](https://app.genez.io/start/deploy?repository=https://github.com/Genez-io/nest-react-getting-started)
+[![Deploy to Genezio](https://raw.githubusercontent.com/Genez-io/graphics/main/svg/deploy-button.svg)](https://app.genez.io/start/deploy?repository=nestjs-react-getting-started)
 
 
 ## Genezio CLI Commands
