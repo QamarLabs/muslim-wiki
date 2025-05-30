@@ -1,0 +1,23 @@
+{
+    "welcome": "Welcome to our application",
+    "links": {
+        "es": "Español",
+        "en": "English",
+        "ar": "Arabic",
+        "ba": "Bosnian",
+        "tr": "Turkish",
+        "al": "Albanian",
+        "fr": "French",
+        "ur": "Urdu",
+        "fa": "Farsi",
+        "cn": "Chinese",
+        "ru": "Russian",
+        "de": "German",
+        "jp": "Japanese",
+        "hi": "Hindi"
+    },
+    "buttons": {
+        "submit": "Submit",
+        "cancel": "Cancel"
+    }
+}
