@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCombobox, autocomplete } from '@szhsin/react-autocomplete';
-import { RiCloseFill, RiCloseLargeLine, RiSearch2Fill, RiSearch2Line, RiSearchLine } from "react-icons/ri";
+import { RiCloseLargeLine, RiSearchLine } from "react-icons/ri";
 
 type Props = {
   options: string[];
@@ -18,7 +18,7 @@ const Autocomplete = ({
     : options;
 
   const {
-    getLabelProps,
+    // getLabelProps,
     getInputProps,
     getClearProps,
     getToggleProps,

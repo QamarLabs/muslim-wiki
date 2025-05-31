@@ -1,4 +1,4 @@
-import { Flex, FlexBlock, FlexItem } from '@wordpress/components';
+import { Flex } from '@wordpress/components';
 import React from 'react';
 
 export default function ResponsiveContainer({ children }: React.PropsWithChildren<any>) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import ResponsiveContainer from './common/ResponsiveContainer';
 import "./App.css";
 import './i18n';
@@ -7,21 +7,24 @@ import { useTranslation } from 'react-i18next';
 import Autocomplete from './common/Autocomplete';
 
 export default function App() {
-  const { t, i18n } = useTranslation("common");
-  const [name, setName] = useState("");
-  const [response, setResponse] = useState("");
+  const { 
+    t, 
+    // i18n 
+  } = useTranslation("common");
+  // const [name, setName] = useState("");
+  // const [response, setResponse] = useState("");
 
-  async function sayHello() {
-    const url = import.meta.env.VITE_API_URL_NESTJS;
-    const res = await fetch(`${url}/hello?name=${name}`);
-    const data = await res.json();
-    setResponse(data.message);
-  }
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-    // Optionally load additional namespaces
-    i18n.loadNamespaces(['common']);
-  };
+  // async function sayHello() {
+  //   const url = import.meta.env.VITE_API_URL_NESTJS;
+  //   const res = await fetch(`${url}/hello?name=${name}`);
+  //   const data = await res.json();
+  //   setResponse(data.message);
+  // }
+  // const changeLanguage = (lng: string) => {
+  //   i18n.changeLanguage(lng);
+  //   // Optionally load additional namespaces
+  //   i18n.loadNamespaces(['common']);
+  // };
 
   return (
     <>
@@ -34,7 +37,7 @@ export default function App() {
               <h2 className="mw-text mw-header">Muslim Wiki</h2>
               <h5 className="mw-text mw-subheader">The Free Encyclopedia</h5>
               <img
-                src="/src/assets/muslimwiki-globe.svg"
+                src="muslimwiki-globe.svg"
                 className="logo genezio light"
                 alt="Genezio Logo"
               />
