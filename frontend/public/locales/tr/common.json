@@ -1,8 +1,24 @@
 {
-    "welcome": "Uygulamamıza hoş geldiniz",
+    "welcome": "MuslimWiki'ye Hoşgeldiniz",
+    "searchPlaceholder": "Bir göz at...",
+    "links": {
+        "es": "İspanyolca",
+        "en": "İngilizce",
+        "ar": "Arapça",
+        "ba": "Boşnakça",
+        "tr": "Türkçe",
+        "al": "Arnavutça",
+        "fr": "Fransızca",
+        "ur": "Urduca",
+        "fa": "Farsça",
+        "cn": "Çince",
+        "ru": "Rusça",
+        "de": "Almanca",
+        "jp": "Japonca",
+        "hi": "Hintçe"
+    },
     "buttons": {
-      "submit": "Gönder",
-      "cancel": "İptal"
+        "submit": "Gönder",
+        "cancel": "İptal"
     }
-  }
-  
+}

@@ -13,15 +13,22 @@
     "@genezio/vite-plugin-genezio": "^1.0.4",
     "@szhsin/react-autocomplete": "^1.1.0",
     "@wordpress/components": "^29.10.0",
+    "axios": "^1.9.0",
     "i18next": "^25.2.1",
     "i18next-browser-languagedetector": "^8.1.0",
     "i18next-http-backend": "^3.0.2",
+    "mobx": "^6.13.7",
+    "mobx-react-lite": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^15.5.2",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "react-router": "^7.6.1",
+    "react-router-dom": "^7.2.1"
   },
   "devDependencies": {
+    "@react-router/dev": "^7.6.1",
+    "@types/node": "^22.15.29",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

@@ -1,8 +1,24 @@
 {
-    "welcome": "Bienvenido a nuestra aplicación",
+    "welcome": "Bienvenido a MuslimWiki",
+    "searchPlaceholder": "Echa un vistazo...",
+    "links": {
+        "es": "Español",
+        "en": "Inglés",
+        "ar": "Árabe",
+        "ba": "Bosnio",
+        "tr": "Turco",
+        "al": "Albanés",
+        "fr": "Francés",
+        "ur": "Urdu",
+        "fa": "Persa",
+        "cn": "Chino",
+        "ru": "Ruso",
+        "de": "Alemán",
+        "jp": "Japonés",
+        "hi": "Hindi"
+    },
     "buttons": {
-      "submit": "Enviar",
-      "cancel": "Cancelar"
+        "submit": "Enviar",
+        "cancel": "Cancelar"
     }
-  }
-  
+}

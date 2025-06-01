@@ -1,8 +1,24 @@
 {
-    "welcome": "Mirësevini në aplikacionin tonë",
+    "welcome": "Mirë se vini në MuslimWiki",
+    "searchPlaceholder": "Hidh një sy...",
+    "links": {
+        "es": "Spanjisht",
+        "en": "Anglisht",
+        "ar": "Arabisht",
+        "ba": "Boshnjakisht",
+        "tr": "Turqisht",
+        "al": "Shqip",
+        "fr": "Frëngjisht",
+        "ur": "Urdu",
+        "fa": "Persisht",
+        "cn": "Kinezisht",
+        "ru": "Rusisht",
+        "de": "Gjermanisht",
+        "jp": "Japonisht",
+        "hi": "Indisht"
+    },
     "buttons": {
-      "submit": "Dërgo",
-      "cancel": "Anulo"
+        "submit": "Dërgo",
+        "cancel": "Anulo"
     }
-  }
-  
+}

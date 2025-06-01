@@ -3,10 +3,12 @@ import { useCombobox, autocomplete } from '@szhsin/react-autocomplete';
 import { RiCloseLargeLine, RiSearchLine } from "react-icons/ri";
 
 type Props = {
+  placeholder: string;
   options: string[];
 }
 
 const Autocomplete = ({
+  placeholder,
   options
 }: React.PropsWithChildren<Props>) => {
   const [value, setValue] = useState<string>();
@@ -43,7 +45,7 @@ const Autocomplete = ({
   return (
     <div className='w-100 p-0'>
       <div className='position-relative'>
-        <input placeholder="Take a look..." {...getInputProps()} className='w-100 p-2 bg-transparent text-dark' />
+        <input placeholder={placeholder} {...getInputProps()} className='w-100 p-2 bg-transparent text-dark' />
         {!isInputEmpty && <button {...getClearProps()} className='position-absolute right-10 border-none h-100 bg-transparent'>
           <RiCloseLargeLine style={{ backgroundColor: 'white', color: 'rgb(69, 69, 69)', padding: '0.25em', width: '3em', height: '1.25em' }} />
         </button>}

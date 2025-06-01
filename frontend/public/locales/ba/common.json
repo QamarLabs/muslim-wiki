@@ -1,8 +1,24 @@
 {
-    "welcome": "Dobrodošli u našu aplikaciju",
+    "welcome": "Dobrodošli na MuslimWiki",
+    "searchPlaceholder": "Pogledaj...",
+    "links": {
+        "es": "Španski",
+        "en": "Engleski",
+        "ar": "Arapski",
+        "ba": "Bosanski",
+        "tr": "Turski",
+        "al": "Albanski",
+        "fr": "Francuski",
+        "ur": "Urdu",
+        "fa": "Perzijski",
+        "cn": "Kineski",
+        "ru": "Ruski",
+        "de": "Njemački",
+        "jp": "Japanski",
+        "hi": "Hindu"
+    },
     "buttons": {
-      "submit": "Pošalji",
-      "cancel": "Otkaži"
+        "submit": "Pošalji",
+        "cancel": "Otkaži"
     }
-  }
-  
+}
