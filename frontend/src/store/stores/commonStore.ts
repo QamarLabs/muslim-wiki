@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx';
-import { PagingParams } from '../../models/common';
 
 export default class CommonStore {
     constructor() {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {  Flex, FlexItem, Icon, CardDivider } from "@wordpress/components";
 import { useTranslation } from "react-i18next";
 import { LinkButton } from "../common/Buttons";
