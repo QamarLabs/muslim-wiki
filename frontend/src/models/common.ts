@@ -5,6 +5,11 @@ export interface Pagination {
   totalPages: number;
 }
 
+export interface APIResult<T> {
+  results: T;
+  status: number;
+}
+
 export class PaginatedResult<T> {
   data: T;
   pagination: Pagination;
@@ -23,4 +28,11 @@ export class PagingParams {
     this.pageNumber = pageNumber;
     this.pageSize = pageSize;
   }
+}
+
+
+export interface NavItem {
+  id: string;
+  title: string;
+  items: string[];
 }

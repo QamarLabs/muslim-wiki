@@ -7,7 +7,8 @@ interface Store {
     searchStore: SearchStore;
 }
 
-export const store: Store ={
+export 
+const store: Store ={
     commonStore: new CommonStore(),
     searchStore: new SearchStore(),
 }

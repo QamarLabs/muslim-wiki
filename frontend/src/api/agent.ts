@@ -2,18 +2,24 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { PaginatedResult } from '../models/common';
 import i18n from '../i18n';
 import { router } from '../router';
-import { store } from '../store';
+import { searchApi } from './searchApi';
+// import { store } from '../store';
+
+export const axiosResponseBody = (res: AxiosResponse) => res.data;
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL_NESTJS;
+
+console.log("VITE_API_URL_NESTJS", import.meta.env.VITE_API_URL_NESTJS)
 
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-
-axios.interceptors.request.use((config) => {
-  if (config.url !== process.env.REACT_APP_IP_ADDRESS_LOOKUP) {
-    const token = store.commonStore.token;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+// Middleware Configuration for Axios
+// axios.interceptors.request.use((config) => {
+//   if (config.url !== import.meta.env.REACT_APP_IP_ADDRESS_LOOKUP) {
+//     const token = store.commonStore.token;
+//     if (token) config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
 axios.interceptors.response.use(
   async (response) => {
@@ -94,6 +100,8 @@ axios.interceptors.response.use(
   }
 );
 
-const agent = {};
+const agent = {
+  search: searchApi
+};
 
 export default agent;

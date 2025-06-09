@@ -1,23 +1,57 @@
+
 import { useState } from 'react';
+import { Button } from '@chakra-ui/react';
 import { useCombobox, autocomplete } from '@szhsin/react-autocomplete';
 import { RiCloseLargeLine, RiSearchLine } from "react-icons/ri";
+import { QueriedAutocompleteOption } from '../models/search';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../store';
+import { useNavigate } from 'react-router';
+import { Flex } from '@wordpress/components';
 
 type Props = {
   placeholder: string;
-  options: string[];
+  type?: string;
+  // options: QueriedAutocompleteOption[];
+  // onChange: Function;
+  // onClear: Function;
+  // onKeyDown: Function;
+  // value: string;
 }
 
-const Autocomplete = ({
+const SearchArticleAutocomplete = observer(({
   placeholder,
-  options
+  type,
 }: React.PropsWithChildren<Props>) => {
-  const [value, setValue] = useState<string>();
-  const [selected, setSelected] = useState<string>();
+  const navigate = useNavigate();
+  const { commonStore, searchStore } = useStore();
+  const {
+    clearAutoCompleteOptions,
+    autocompleteOptions,
+    loadAutocompleteOptions,
+    setSearchQry,
+    searchQry,
+    searchLoading,
+    loadSearchWikiPages
+  } = searchStore;
+  const { language } = commonStore;
+  const [currentValue, setCurrentValue] = useState<string>(searchQry ?? '');
+  const [selected, setSelected] = useState<QueriedAutocompleteOption>();
+  const [currentItems, setCurrentItems] = useState<any[]>([]);
 
-  // It's up to you how to filter items based on the input value
-  const items = value
-    ? options.filter((item) => item.toLowerCase().startsWith(value.toLowerCase()))
-    : options;
+  // useEffect(() => {
+  //   setCurrentItems(autocompleteOptions);
+  // }, [autocompleteOptions])
+
+  const autocompleteOnChange: any = async (val: string) => {
+    setCurrentValue(val);
+    if (val) {
+      setSearchQry(val);
+      await loadAutocompleteOptions(val);
+    }
+
+    console.log('autocompleteOptions:', autocompleteOptions)
+  }
 
   const {
     // getLabelProps,
@@ -27,17 +61,22 @@ const Autocomplete = ({
     getListProps,
     getItemProps,
     open,
+    setOpen,
     focusIndex,
     isInputEmpty
   } = useCombobox({
-    items,
-    value,
-    onChange: setValue,
+    items: currentItems,
+    value: searchQry,
+    onChange: autocompleteOnChange as any,
     selected,
     onSelectChange: setSelected,
+    getItemValue: (item: QueriedAutocompleteOption) => item.text,
     feature: autocomplete({
       // The `select` option controls autocomplete in free or select mode
-      select: true // or false
+      select: true, // or false
+      deselectOnClear: true,
+      deselectOnChange: false,
+      rovingText: true
       // Other options: rovingText, deselectOnClear, deselectOnChange, closeOnSelect
     })
   });
@@ -45,19 +84,78 @@ const Autocomplete = ({
   return (
     <div className='w-100 p-0'>
       <div className='position-relative'>
-        <input placeholder={placeholder} {...getInputProps()} className='w-100 p-2 bg-transparent text-dark' />
-        {!isInputEmpty && <button {...getClearProps()} className='position-absolute right-10 border-none h-100 bg-transparent'>
-          <RiCloseLargeLine style={{ backgroundColor: 'white', color: 'rgb(69, 69, 69)', padding: '0.25em', width: '3em', height: '1.25em' }} />
-        </button>}
-        <button {...getToggleProps()} className='position-absolute w-10 bg-primary' style={{ right: 0 }}>
-          <RiSearchLine />
-        </button>
+        <input
+          placeholder={placeholder}
+          value={currentValue}
+          {...getInputProps()}
+          onKeyDown={async (event: React.KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === 'Enter') {
+              if (searchQry) {
+                await loadSearchWikiPages(searchQry);
+                navigate(`/${language}/search?title=${searchQry}`);
+              }
+              console.log('Enter key pressed');
+
+              // Handle form submission or other action
+              // TODO: Navigate to the Search Results Page
+            }
+
+            if (event.key === 'Escape') {
+              console.log('Escape key pressed');
+              setOpen(false);
+            }
+          }}
+          className='w-100 p-2 bg-transparent text-dark mw-autocomplete'
+        />
+        {!isInputEmpty 
+          && (
+            <button 
+              {...getClearProps()} 
+              onClick={() => {
+                setCurrentValue('');
+                setSearchQry('');
+                clearAutoCompleteOptions();
+              }}
+              className='position-absolute right-10 border-none h-100 bg-transparent'
+            >
+                <RiCloseLargeLine style={{ backgroundColor: 'white', color: 'rgb(69, 69, 69)', padding: '0.25em', width: '3em', height: '1.25em' }} />
+            </button>
+        )}
+        {type == 'submit'
+          ? (
+            <Button
+              {...getToggleProps()}
+              className='position-absolute w-10 bg-primary'
+              loading={searchLoading}
+              style={{ right: 0 }}
+              type={type}
+            >
+              <RiSearchLine />
+            </Button>
+          )
+          : (
+            <Button
+              {...getToggleProps()}
+              onClick={async () => {
+                if (searchQry) {
+                  await loadSearchWikiPages(searchQry);
+                  navigate(`/${language}/search?title=${searchQry}`);
+                }
+              }}
+              className='position-absolute w-10 bg-primary'
+              loading={searchLoading}
+              style={{ right: 0 }}
+              type="button"
+            >
+              <RiSearchLine />
+            </Button>
+          )}
       </div>
 
       <ul
         {...getListProps()}
         style={{
-          display: open ? 'block' : 'none',
+          display: open && currentValue ? 'block' : 'none',
           position: 'absolute',
           listStyle: 'none',
           color: '#000',
@@ -67,18 +165,23 @@ const Autocomplete = ({
           margin: 0,
           padding: 0
         }}
+        className='autocompleteList'
       >
-        {items.length ? (
-          items.map((item, index) => (
+        {autocompleteOptions.length ? (
+          autocompleteOptions.map((item: QueriedAutocompleteOption, index) => (
             <li
               style={{
                 background: focusIndex === index ? '#ddd' : 'none',
-                textDecoration: selected === item ? 'underline' : 'none'
+                textDecoration: selected === item ? 'underline' : 'none',
               }}
-              key={item}
+              key={index}
+              value={item.value}
               {...getItemProps({ item, index })}
+              className='w-100'
             >
-              {item}
+              <Flex direction="row" className='p-2 autocompleteItem' >
+                {item.text}
+              </Flex>
             </li>
           ))
         ) : (
@@ -87,6 +190,6 @@ const Autocomplete = ({
       </ul>
     </div>
   );
-};
+});
 
-export default Autocomplete;
+export default SearchArticleAutocomplete;

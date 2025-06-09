@@ -16,7 +16,7 @@ export class ArticleService {
   async searchArticles(
     qry: string,
     page: number = 1,
-    limit: number = 10
+    limit: number = 25
   ): Promise<{ results: Article[]; total: number }> {
     const query = { title: { $regex: qry, $options: 'i' } };
     

@@ -4,5 +4,8 @@ import genezioLocalSDKReload from "@genezio/vite-plugin-genezio";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), genezioLocalSDKReload()]
+  plugins: [react(), genezioLocalSDKReload()],
+  define: {
+    'import.meta.env.VITE_API_URL_NESTJS': JSON.stringify('http://localhost:3000')
+  }
 });

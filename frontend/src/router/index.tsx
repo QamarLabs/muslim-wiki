@@ -6,6 +6,7 @@ import ServerError from '../features/ServerError';
 
 import App from '../App';
 import HomePage from "../HomePage";
+import WikiSearchResults from "../features/WikiSearchResults";
 
 export const routes: RouteObject[] = [
   {
@@ -99,6 +100,7 @@ export const routes: RouteObject[] = [
     //     children: []
     //   },
       { index: true, element: <HomePage /> },
+      { path: "search", element: <WikiSearchResults /> },
       { path: "accessDenied", element: <AccessDenied /> },
       { path: "*", element: <NotFound /> },
       { path: "server-error", element: <ServerError /> },

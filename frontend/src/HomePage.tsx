@@ -16,31 +16,20 @@ export default observer(function HomePage() {
   } = useTranslation("common");
   const navigate = useNavigate();
   const { lang } = useParams();
-  const { searchStore } = useStore();
-  const {  } = searchStore;
+  const { commonStore } = useStore();
+  const { setLanguage, language } = commonStore;
 
   useEffect(() => {
-    if(lang) {
-      i18n.changeLanguage(lang);
-    } else {
+    // alert(lang)
+    if(!lang) {
       i18n.changeLanguage('en');
+      setLanguage('en');
       navigate('/en', { replace: true });
+    } else if(lang != language) {
+      i18n.changeLanguage(lang);
+      setLanguage(lang as "ar" | "al" | "ba" | "cn" | "de" | "en" | "es" | "fa" | "fr" | "hi" | "jp" | "ru" | "tr" | "ur");
     }
   }, [lang]);
-  // const [name, setName] = useState("");
-  // const [response, setResponse] = useState("");
-
-  // async function sayHello() {
-  //   const url = import.meta.env.VITE_API_URL_NESTJS;
-  //   const res = await fetch(`${url}/hello?name=${name}`);
-  //   const data = await res.json();
-  //   setResponse(data.message);
-  // }
-  // const changeLanguage = (lng: string) => {
-  //   i18n.changeLanguage(lng);
-  //   // Optionally load additional namespaces
-  //   i18n.loadNamespaces(['common']);
-  // };
 
   return (
     <>
@@ -62,7 +51,6 @@ export default observer(function HomePage() {
           <FlexItem className='autocompleteContainer'>
             <Autocomplete 
               placeholder={t("searchPlaceholder")}
-              options={["Test", "test 2", "ABCD"]} 
             />
           </FlexItem>
         </Flex>

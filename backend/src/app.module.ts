@@ -4,14 +4,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ArticlesModule } from './modules/article.module';
 import { ArticleRequestsModule } from './modules/articlerequest.module';
+import { SearchController } from './search/search.controller';
+import { SearchService } from './search/search.service';
+import { SearchModule } from './modules/search.module';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb+srv://HWfKySOT:xMCQRM5xMyTM7hft@us-east-1.ufsuw.mongodb.net/Muslim-Wiki', {
     }),
     ArticlesModule,
-    ArticleRequestsModule
+    ArticleRequestsModule,
+    SearchModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, SearchController],
   providers: [AppService],
 })
 export class AppModule {}

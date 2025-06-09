@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 100vw;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -21,11 +21,28 @@
 }
 
 .responsiveContainer {
+  max-width: 1280px !important;
   flex-direction: column !important;
 }
 
 .autocompleteContainer {
   width: 90%;
+  max-width: 600px; /* or your content's ideal max width */
+}
+
+.autocompleteList {
+  width: 77.5%;
+  max-width: 600px; /* or your content's ideal max width */ 
+  height: 100px !important;
+}
+
+.autocompleteList::-webkit-scrollbar {
+  width: 6px; /* Makes the scrollbar thinner */
+  height: 6px; /* For horizontal scrollbars (optional) */
+}
+
+.autocompleteItem:hover {
+  cursor: pointer !important;
 }
 
 .autocompleteContainer,
@@ -89,6 +106,9 @@ input {
 
 
 @media (min-width: 768px) {
+  #root {
+    padding: unset;
+  }
   .logo {
     max-height: 25em;
   }
@@ -101,8 +121,13 @@ input {
 
   .autocompleteContainer {
     width: 70%;
+    max-width: 700px; /* or your content's ideal max width */
   }
-
+  .autocompleteList {
+    width: 70%;
+    max-width: 700px; /* or your content's ideal max width */
+    height: 150px !important;
+  }
   /* .lng-item {
     position: absolute;
   } */
@@ -158,5 +183,10 @@ input {
 
   .autocompleteContainer {
     width: 30%;
+    max-width: 1000px;
+  }
+  .autocompleteList {
+    width: 30%;
+    max-width: 1000px;
   }
 }
