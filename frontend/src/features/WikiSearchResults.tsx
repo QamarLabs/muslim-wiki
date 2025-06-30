@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { FlexItem } from '@wordpress/components';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import Autocomplete from '../common/Autocomplete';
 import { useStore } from '../store';
 import { useNavigate } from 'react-router';
+import { AutocompleteType } from '../models/common';
 
 interface SearchResultsProps {
     initialQuery?: string;
@@ -20,14 +21,14 @@ export default observer(function WikiSearchResults() {
     const { commonStore, searchStore } = useStore();
     const { language } = commonStore;
     const { searchQry, searchResults, loadSearchWikiPages } = searchStore;
+
     // const [query, setQuery] = useState(initialQuery);
     // const [results, setResults] = useState<string[]>([]);
-
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
         // Simulate search results
-        if(searchQry) {
+        if (searchQry) {
             loadSearchWikiPages(searchQry)
                 .then(searchedItems => {
                     navigate(`/${language}/search?title=${searchQry}`);
@@ -45,7 +46,9 @@ export default observer(function WikiSearchResults() {
                     <FlexItem className='autocompleteContainer'>
                         <Autocomplete
                             placeholder={t("searchPlaceholder")}
-                            type="submit"
+                            autocompleteType={AutocompleteType.Search}
+                            buttonType="submit"
+                            hasButton={true}
                         />
                     </FlexItem>
                 </form>
@@ -62,7 +65,12 @@ export default observer(function WikiSearchResults() {
                             <ul>
                                 {searchResults.map((itm, index) => (
                                     <li key={itm.id} className="result-item">
-                                        <h3>{itm.title}</h3>
+                                        <h3
+                                            className='cursor-pointer'
+                                            onClick={() => {
+                                                navigate(`/${language}/wikipages/${itm.pageid}`)
+                                            }}
+                                        >{itm.title}</h3>
                                         <p>{itm.summary}</p>
                                     </li>
                                 ))}

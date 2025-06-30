@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Article, ArticleSchema } from '../schemas/article.schema';
-import { ArticleService } from '../article.service';
+import { WikipagesService } from 'src/wikipages/wikipages.service';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Article.name, schema: ArticleSchema }]),
   ],
-  providers: [ArticleService],
-  exports: [ArticleService],
+  providers: [WikipagesService],
+  exports: [WikipagesService],
 })
-export class ArticlesModule {}
+export class WikiPagesModule {}

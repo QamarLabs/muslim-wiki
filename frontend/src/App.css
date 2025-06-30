@@ -25,20 +25,28 @@
   flex-direction: column !important;
 }
 
+.responsiveTextContainer {
+  max-width: 90vw !important;
+}
+
 .autocompleteContainer {
   width: 90%;
-  max-width: 600px; /* or your content's ideal max width */
+  max-width: 600px;
+  /* or your content's ideal max width */
 }
 
 .autocompleteList {
   width: 77.5%;
-  max-width: 600px; /* or your content's ideal max width */ 
+  max-width: 600px;
+  /* or your content's ideal max width */
   height: 100px !important;
 }
 
 .autocompleteList::-webkit-scrollbar {
-  width: 6px; /* Makes the scrollbar thinner */
-  height: 6px; /* For horizontal scrollbars (optional) */
+  width: 6px;
+  /* Makes the scrollbar thinner */
+  height: 6px;
+  /* For horizontal scrollbars (optional) */
 }
 
 .autocompleteItem:hover {
@@ -66,12 +74,26 @@ input {
   padding: 10px;
 }
 
+#navbar-autocomplete>.w-100>ul {
+  width: 40vw !important;
+  padding: 1em !important;
+}
+
+
+.right-0 {
+  right: 0% !important;
+}
+
 .right-10 {
   right: 10% !important;
 }
 
 .mw-text {
   font-family: "Roboto Serif", serif;
+}
+
+.mw-small {
+  font-size: 75%;
 }
 
 .mw-body {
@@ -96,6 +118,37 @@ input {
   padding: 0;
 }
 
+.mw-subheader-subtitle {
+  font-size: 1.1em !important;
+  font-weight: lighter;
+  margin-bottom: -1em;
+  padding: 0;
+}
+
+.mw-subheader.m-1 {
+  margin: 1em !important;
+}
+
+.mw-bold-small-header {
+  font-size: 125% !important;
+  font-weight: bolder;
+  padding: 0;
+}
+
+#tools>.tool-item:hover {
+  text-decoration: underline;
+  filter: drop-shadow(0 0 2em #61dafbaa);
+
+}
+
+#tools>.tool-item>p {
+  cursor: pointer;
+}
+
+#tools>.tool-item>svg:hover {
+  cursor: pointer;
+}
+
 .lng-item {
   width: 24%;
 }
@@ -104,11 +157,22 @@ input {
   flex-direction: column !important;
 }
 
+.responsiveContainer.wikipage>*:first-child {
+  order: 2 !important;
+  width: 90%;
+}
+
+.responsiveContainer.wikipage>*:nth-child(2) {
+  order: -1 !important;
+  width: 90%;
+}
+
 
 @media (min-width: 768px) {
   #root {
     padding: unset;
   }
+
   .logo {
     max-height: 25em;
   }
@@ -119,15 +183,33 @@ input {
     /* width: 80vw; */
   }
 
+  .responsiveContainer.wikipage {
+    flex-direction: row !important;
+  }
+
+  .responsiveContainer.wikipage>*:first-child {
+    width: 65%;
+    order: unset !important;
+  }
+
+  .responsiveContainer.wikipage>*:nth-child(2) {
+    width: 32.5%;
+    order: unset !important;
+  }
+
   .autocompleteContainer {
     width: 70%;
-    max-width: 700px; /* or your content's ideal max width */
+    max-width: 700px;
+    /* or your content's ideal max width */
   }
+
   .autocompleteList {
     width: 70%;
-    max-width: 700px; /* or your content's ideal max width */
+    max-width: 700px;
+    /* or your content's ideal max width */
     height: 150px !important;
   }
+
   /* .lng-item {
     position: absolute;
   } */
@@ -137,6 +219,7 @@ input {
   .lng-item:nth-child(4) { left: 15%; top: 5% }
   .lng-item:nth-child(5) { left: 20%; top: 0% } */
 }
+
 
 @media (prefers-color-scheme: dark) {
   .dark {
@@ -181,12 +264,43 @@ input {
     flex-direction: row !important;
   }
 
+  .responsiveTextContainer {
+    max-width: 95vw !important;
+  }
+
   .autocompleteContainer {
     width: 30%;
     max-width: 1000px;
   }
+
   .autocompleteList {
     width: 30%;
     max-width: 1000px;
   }
+}
+
+@media (min-width: 1024px) {
+
+  .responsiveTextContainer {
+    max-width: 90vw !important;
+  }
+
+  .responsiveContainer.wikipage>*:first-child {
+    width: 47.5%;
+    order: unset !important;
+  }
+
+  .responsiveContainer.wikipage>*:nth-child(2) {
+    width: 47.5%;
+    order: unset !important;
+  }
+}
+
+
+@media (min-width: 2200px) {
+
+  .responsiveTextContainer {
+    max-width: 80vw !important;
+  }
+
 }

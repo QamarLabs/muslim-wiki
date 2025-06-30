@@ -7,6 +7,8 @@ import ServerError from '../features/ServerError';
 import App from '../App';
 import HomePage from "../HomePage";
 import WikiSearchResults from "../features/WikiSearchResults";
+import WikiPage from "../features/WikiPage";
+import Collaborate from "../features/Collaborate";
 
 export const routes: RouteObject[] = [
   {
@@ -100,7 +102,9 @@ export const routes: RouteObject[] = [
     //     children: []
     //   },
       { index: true, element: <HomePage /> },
+      { path: "collaborate", element: <Collaborate /> },
       { path: "search", element: <WikiSearchResults /> },
+      { path: "wikipages/:pageId", element: <WikiPage /> },
       { path: "accessDenied", element: <AccessDenied /> },
       { path: "*", element: <NotFound /> },
       { path: "server-error", element: <ServerError /> },

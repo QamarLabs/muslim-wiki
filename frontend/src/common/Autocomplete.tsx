@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '@chakra-ui/react';
 import { useCombobox, autocomplete } from '@szhsin/react-autocomplete';
 import { RiCloseLargeLine, RiSearchLine } from "react-icons/ri";
@@ -8,10 +8,14 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../store';
 import { useNavigate } from 'react-router';
 import { Flex } from '@wordpress/components';
+import useGetQueryParams from '../hooks/useGetQueryParams';
+import { AutocompleteType } from '../models/common';
 
 type Props = {
   placeholder: string;
-  type?: string;
+  buttonType?: string;
+  autocompleteType: AutocompleteType;
+  hasButton: boolean;
   // options: QueriedAutocompleteOption[];
   // onChange: Function;
   // onClear: Function;
@@ -21,21 +25,45 @@ type Props = {
 
 const SearchArticleAutocomplete = observer(({
   placeholder,
-  type,
+  buttonType,
+  autocompleteType,
+  hasButton
 }: React.PropsWithChildren<Props>) => {
   const navigate = useNavigate();
   const { commonStore, searchStore } = useStore();
-  const {
-    clearAutoCompleteOptions,
-    autocompleteOptions,
-    loadAutocompleteOptions,
-    setSearchQry,
-    searchQry,
-    searchLoading,
-    loadSearchWikiPages
-  } = searchStore;
-  const { language } = commonStore;
-  const [currentValue, setCurrentValue] = useState<string>(searchQry ?? '');
+  const { 
+    language 
+  } = commonStore;
+
+  const loadingAutocomplete = useMemo(() => {
+    if(autocompleteType === AutocompleteType.Navbar) return commonStore.autoCompleteLoading;
+    return searchStore.autoCompleteLoading;
+  }, [searchStore.autoCompleteLoading, commonStore.autoCompleteLoading]);
+
+  const autocompleteSearchQry = useMemo(() => {
+    if(autocompleteType === AutocompleteType.Navbar) return commonStore.navbarSearchQry;
+    return searchStore.searchQry;
+  }, [searchStore.searchQry, commonStore.navbarSearchQry]);  
+  const setAutocompleteSearchQry = useMemo(() => {
+    if(autocompleteType === AutocompleteType.Navbar) return commonStore.setNavbarSearchQry;
+    return searchStore.setSearchQry;
+  }, []);
+  const loadAutocomplete = useMemo(() => {
+    if(autocompleteType === AutocompleteType.Navbar) return commonStore.loadAutocompleteOptions;
+    return searchStore.loadAutocompleteOptions;
+  }, []);
+  const autocompleteOptions = useMemo(() => {
+    if(autocompleteType === AutocompleteType.Navbar) return commonStore.navbarAutocompleteOptions;
+    return searchStore.autocompleteOptions;
+  }, [searchStore.loadAutocompleteOptions,  commonStore.loadAutocompleteOptions, searchStore.searchQry, commonStore.navbarSearchQry]); 
+  const clearAutoCompleteOptions = useMemo(() => {
+    if(autocompleteType === AutocompleteType.Navbar) return commonStore.clearNavAutoCompleteRegistry;
+    return searchStore.clearAutoCompleteOptions;
+  }, []);
+
+
+  const [currentValue, setCurrentValue] = useState<string>(autocompleteSearchQry ?? '');
+  // const [loading, setLoading] = useState<boolean>(false);
   const [selected, setSelected] = useState<QueriedAutocompleteOption>();
   const [currentItems, setCurrentItems] = useState<any[]>([]);
 
@@ -46,12 +74,19 @@ const SearchArticleAutocomplete = observer(({
   const autocompleteOnChange: any = async (val: string) => {
     setCurrentValue(val);
     if (val) {
-      setSearchQry(val);
-      await loadAutocompleteOptions(val);
+      debugger;
+      setAutocompleteSearchQry(val);
+      await loadAutocomplete(val);
     }
 
     console.log('autocompleteOptions:', autocompleteOptions)
   }
+
+  useGetQueryParams({
+    key: 'title',
+    currentValue: autocompleteSearchQry,
+    setValue: autocompleteOnChange
+  });
 
   const {
     // getLabelProps,
@@ -66,10 +101,14 @@ const SearchArticleAutocomplete = observer(({
     isInputEmpty
   } = useCombobox({
     items: currentItems,
-    value: searchQry,
+    value: autocompleteSearchQry,
     onChange: autocompleteOnChange as any,
     selected,
-    onSelectChange: setSelected,
+    onSelectChange: (itm: QueriedAutocompleteOption | undefined) =>  {
+      setSelected(itm);
+      if(itm)
+        navigate(`/${language}/wikipages/${itm.value}`)
+    },
     getItemValue: (item: QueriedAutocompleteOption) => item.text,
     feature: autocomplete({
       // The `select` option controls autocomplete in free or select mode
@@ -90,9 +129,10 @@ const SearchArticleAutocomplete = observer(({
           {...getInputProps()}
           onKeyDown={async (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter') {
-              if (searchQry) {
-                await loadSearchWikiPages(searchQry);
-                navigate(`/${language}/search?title=${searchQry}`);
+              if (autocompleteSearchQry) {
+                await loadAutocomplete(autocompleteSearchQry);
+                if(autocompleteType === AutocompleteType.Search)
+                  navigate(`/${language}/search?title=${autocompleteSearchQry}`);
               }
               console.log('Enter key pressed');
 
@@ -113,43 +153,48 @@ const SearchArticleAutocomplete = observer(({
               {...getClearProps()} 
               onClick={() => {
                 setCurrentValue('');
-                setSearchQry('');
+                setAutocompleteSearchQry('');
                 clearAutoCompleteOptions();
               }}
-              className='position-absolute right-10 border-none h-100 bg-transparent'
+              className={`position-absolute ${hasButton ? 'right-10' : 'right-0'} border-none h-100 bg-transparent`}
             >
                 <RiCloseLargeLine style={{ backgroundColor: 'white', color: 'rgb(69, 69, 69)', padding: '0.25em', width: '3em', height: '1.25em' }} />
             </button>
         )}
-        {type == 'submit'
-          ? (
-            <Button
-              {...getToggleProps()}
-              className='position-absolute w-10 bg-primary'
-              loading={searchLoading}
-              style={{ right: 0 }}
-              type={type}
-            >
-              <RiSearchLine />
-            </Button>
-          )
-          : (
-            <Button
-              {...getToggleProps()}
-              onClick={async () => {
-                if (searchQry) {
-                  await loadSearchWikiPages(searchQry);
-                  navigate(`/${language}/search?title=${searchQry}`);
-                }
-              }}
-              className='position-absolute w-10 bg-primary'
-              loading={searchLoading}
-              style={{ right: 0 }}
-              type="button"
-            >
-              <RiSearchLine />
-            </Button>
-          )}
+        {hasButton && (
+          <>
+          {buttonType == 'submit'
+            ? (
+              <Button
+                {...getToggleProps()}
+                className='position-absolute w-10 bg-primary'
+                loading={searchStore.searchLoading}
+                style={{ right: 0 }}
+                type={buttonType}
+              >
+                <RiSearchLine />
+              </Button>
+            )
+            : (
+              <Button
+                {...getToggleProps()}
+                onClick={async () => {
+                  if (autocompleteSearchQry) {
+                    await loadAutocomplete(autocompleteSearchQry);
+                    if(autocompleteType === AutocompleteType.Search)
+                      navigate(`/${language}/search?title=${autocompleteSearchQry}`);
+                  }
+                }}
+                className='position-absolute w-10 bg-primary'
+                loading={searchStore.searchLoading}
+                style={{ right: 0 }}
+                type="button"
+              >
+                <RiSearchLine />
+              </Button>
+            )}
+          </>
+        )}
       </div>
 
       <ul

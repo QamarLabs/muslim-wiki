@@ -1,6 +1,10 @@
 {
     "welcome": "Welcome to MuslimWiki",
     "searchPlaceholder": "Take a look...",
+    "searchNavbarPlaceholder": "Search Muslim Wiki",
+    "donate": "Donate",
+    "createAccount": "Create Account",
+    "login": "Login",
     "links": {
         "es": "Español",
         "en": "English",

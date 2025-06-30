@@ -36,3 +36,8 @@ export interface NavItem {
   title: string;
   items: string[];
 }
+
+export enum AutocompleteType {
+  Navbar = "navbar",
+  Search = "search"
+}

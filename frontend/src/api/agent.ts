@@ -3,6 +3,9 @@ import { PaginatedResult } from '../models/common';
 import i18n from '../i18n';
 import { router } from '../router';
 import { searchApi } from './searchApi';
+import { wikipagesApi } from './wikipagesApi';
+import { authApi } from './authApi';
+
 // import { store } from '../store';
 
 export const axiosResponseBody = (res: AxiosResponse) => res.data;
@@ -101,7 +104,9 @@ axios.interceptors.response.use(
 );
 
 const agent = {
-  search: searchApi
+  auth: authApi,
+  search: searchApi,
+  wikiPages: wikipagesApi
 };
 
 export default agent;
